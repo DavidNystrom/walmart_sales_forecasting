@@ -1,2 +1,5 @@
-# walmart_sales_forecasting
-Walmart Sales Forecasting &amp; Inventory Optimization
+## Walmart Sales Forecasting & Inventory Optimization
+
+This project is a retail analytics solution that predicts Walmart’s future sales and optimizes inventory levels accordingly. It addresses the challenge of anticipating demand fluctuations across stores and departments, helping to prevent stockouts and reduce excess inventory. By analyzing historical sales data and trends (including seasonality and promotions), the project provides forecasts that inform inventory planning and supply chain decisions.
+
+The solution utilizes time series forecasting techniques and machine learning models (such as ARIMA, Prophet, or XGBoost) implemented in Python. Tools like Pandas are used for data manipulation, and Matplotlib/Seaborn for visualizing sales trends. The project includes features such as exploratory data analysis, model training and validation for weekly sales prediction, and an inventory optimization component that recommends optimal stock levels based on predicted demand. The implementation will include a deployed Streamlit dashboard where users can interactively explore forecasts by store and department.
