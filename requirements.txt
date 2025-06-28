@@ -5,3 +5,4 @@ rich
 scikit-learn
 xgboost
 joblib
+matplotlib

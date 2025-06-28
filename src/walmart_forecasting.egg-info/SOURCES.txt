@@ -1,6 +1,0 @@
-README.md
-setup.py
-src/walmart_forecasting.egg-info/PKG-INFO
-src/walmart_forecasting.egg-info/SOURCES.txt
-src/walmart_forecasting.egg-info/dependency_links.txt
-src/walmart_forecasting.egg-info/top_level.txt

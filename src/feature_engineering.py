@@ -5,49 +5,46 @@ import logging
 import pandas as pd
 from src import config
 
-# ─── Setup Logging ──────────────────────────────────────────────────────
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
 def build_features():
-    # 1. Load the cleaned & merged data
-    in_path = os.path.join(config.PROCESSED_DATA_DIR, "combined.csv")
-    logging.info(f"Loading {in_path}")
-    df = pd.read_csv(in_path, parse_dates=["Date"])
+    path = os.path.join(config.PROCESSED_DATA_DIR, "combined.csv")
+    logging.info(f"Loading combined data from {path}")
+    df = pd.read_csv(path, parse_dates=["Date"])
     logging.info(f"  → combined.csv shape: {df.shape}")
 
-    # 2. Create date-based features
-    logging.info("Creating date-based features")
+    # Sort for time-based group ops
+    df = df.sort_values(["Store","Dept","Date"])
+
+    # Date parts
     df["Year"]       = df["Date"].dt.year
     df["Month"]      = df["Date"].dt.month
     df["WeekOfYear"] = df["Date"].dt.isocalendar().week
     df["DayOfWeek"]  = df["Date"].dt.dayofweek
-    df["DayOfYear"]  = df["Date"].dt.dayofyear
 
-    # 3. Encode categorical variables
-    logging.info("Encoding Store Type as one-hot")
-    df = pd.get_dummies(
-        df,
-        columns=["Type"],
-        prefix="StoreType",
-        drop_first=True,
-    )
+    # Lag features
+    logging.info("Creating lag & rolling features")
+    df["lag_1"] = df.groupby(["Store","Dept"])["Weekly_Sales"].shift(1)
+    df["rolling_mean_4"] = df.groupby(["Store","Dept"])["Weekly_Sales"] \
+                              .shift(1).rolling(window=4).mean()
+    df["rolling_std_4"]  = df.groupby(["Store","Dept"])["Weekly_Sales"] \
+                              .shift(1).rolling(window=4).std()
 
-    logging.info("Converting IsHoliday to integer flag")
+    # Fill NaNs from these new features
+    df[["lag_1","rolling_mean_4","rolling_std_4"]] = df[["lag_1","rolling_mean_4","rolling_std_4"]].fillna(0)
+
+    # One-hot encode Store Type
+    df = pd.get_dummies(df, columns=["Type"], prefix="StoreType", drop_first=True)
+
+    # Convert boolean
     df["IsHoliday"] = df["IsHoliday"].astype(int)
 
-    # 4. Drop columns not needed for modeling
-    logging.info("Dropping original Date column")
-    df.drop(columns=["Date"], inplace=True)
+    # Drop irrelevants
+    df = df.drop(columns=["Date"])
 
-    # 5. Save to features.csv
-    os.makedirs(config.PROCESSED_DATA_DIR, exist_ok=True)
-    out_path = os.path.join(config.PROCESSED_DATA_DIR, "features.csv")
-    df.to_csv(out_path, index=False)
-    logging.info(f"Saved features to {out_path} with shape {df.shape}")
+    out = os.path.join(config.PROCESSED_DATA_DIR, "features.csv")
+    df.to_csv(out, index=False)
+    logging.info(f"Saved enriched features to {out} (shape: {df.shape})")
 
 if __name__ == "__main__":
     build_features()
