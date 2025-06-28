@@ -1,15 +1,61 @@
-## Walmart Sales Forecasting & Inventory Optimization
+# Walmart Sales Forecasting & Inventory Optimization
 
-This project is a retail analytics solution that predicts Walmart’s future sales and optimizes inventory levels accordingly. It addresses the challenge of anticipating demand fluctuations across stores and departments, helping to prevent stockouts and reduce excess inventory. By analyzing historical sales data and trends (including seasonality and promotions), the project provides forecasts that inform inventory planning and supply chain decisions.
 
-The solution utilizes time series forecasting techniques and machine learning models (such as ARIMA, Prophet, or XGBoost) implemented in Python. Tools like Pandas are used for data manipulation, and Matplotlib/Seaborn for visualizing sales trends. The project includes features such as exploratory data analysis, model training and validation for weekly sales prediction, and an inventory optimization component that recommends optimal stock levels based on predicted demand. The implementation will include a deployed Streamlit dashboard where users can interactively explore forecasts by store and department.
+## 📋 Table of Contents
+1. [🚀 Overview](#-overview)  
+2. [📦 Data Source](#-data-source)  
+3. [⚡ Quickstart](#-quickstart)  
+4. [🛠️ Installation](#️-installation)  
+5. [📊 Results](#-results)  
+6. [🖼️ Screenshots](#️-screenshots)  
+7. [☁️ Live Demo](#️-live-demo)  
+8. [🔧 Tech Stack](#-tech-stack)  
+9. [📈 Future Work](#-future-work)  
+10. [🤝 Contributing](#-contributing)  
+11. [⚖️ License](#️-license)  
 
-### Data Source
+---
 
-This project uses the [Walmart Store Sales Forecasting](https://www.kaggle.com/competitions/walmart-recruiting-store-sales-forecasting/data) dataset from Kaggle. It includes three files:
+## 🚀 Overview
+A retail analytics pipeline that predicts Walmart’s weekly sales.  
+Key highlights:
+- **Data span:** 2010–2012, 45 stores, 143 weeks  
+- **Models:** XGBoost regressor (with naïve last-week sales baseline for comparison)  
+- **Performance:** RMSE ~\$3,379 (40.4% sMAPE) vs.\ naive baseline RMSE ~\$9,986  
+- **Deployment:** Streamlit dashboard & Docker container  
 
-- `train.csv`: Weekly sales data for each department-store combination.  
-- `features.csv`: External factors (temperature, fuel price, CPI, unemployment, holiday flags, promotions).  
-- `stores.csv`: Store metadata (type, size).
+---
 
-> **Data attribution**: Dataset made available by Walmart via Kaggle for educational and research purposes.
+## 📦 Data Source
+This project uses the [Walmart Store Sales Forecasting][kaggle-link] dataset from Kaggle, containing:  
+- `train.csv`: Weekly sales per store & department  
+- `features.csv`: External factors (weather, CPI, fuel price, promotions)  
+- `stores.csv`: Store metadata (type, size)  
+
+> **Attribution:** Dataset provided by Walmart via Kaggle for educational use.
+
+---
+
+## ⚡ Quickstart
+Get the full pipeline up and running:
+
+```bash
+git clone https://github.com/youruser/walmart-sales-forecasting.git
+cd walmart-sales-forecasting
+
+# Create & activate virtual env
+python -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run entire pipeline
+python -m src.preprocess
+python -m src.feature_engineering
+python -m src.hyperparameter_grid
+python -m src.model_eval
+python -m src.forecast
+
+# Launch dashboard
+streamlit run app/dashboard.py
