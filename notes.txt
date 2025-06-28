@@ -1,0 +1,10 @@
+To run preprocess.py:   
+
+    python -m src.preprocess
+
+To list top five lines of csv:  
+
+    head -n 5 data/processed/features.csv
+
+To list top n (example=10) lines of csv in pretty style:
+    python -m src.pretty_print data/processed/features.csv --max-rows 10
