@@ -111,8 +111,6 @@ Try it live on Streamlit Cloud:
 - **Data Processing:** Pandas, Python-dateutil  
 - **Modeling:** XGBoost, scikit-learn  
 - **Visualization & UI:** Matplotlib, Streamlit  
-- **Deployment:** Docker, Streamlit Community Cloud, GitHub Actions CI  
-- **Testing:** pytest, coverage, black, isort  
 
 ---
 
@@ -121,7 +119,9 @@ Try it live on Streamlit Cloud:
 - **Segmented models:** separate high-volume vs low-volume departments  
 - **Holiday features:** proximity flags for major holiday weeks  
 - **Ensembling:** blend XGBoost with ARIMA/Prophet for trend capture  
-- **API layer:** expose forecasts via FastAPI  
+- **API layer:** expose forecasts via FastAPI
+- **Deployment:** Docker, Streamlit Community Cloud, GitHub Actions CI  
+- **Testing:** pytest, coverage, black, isort  
 
 ---
 
