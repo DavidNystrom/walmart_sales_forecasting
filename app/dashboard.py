@@ -1,6 +1,11 @@
 # app/dashboard.py
+import os, sys
 
-import os
+# ─── Add project root so src/ is on PYTHONPATH ──────────────────────────────
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 import pandas as pd
 import joblib
 import streamlit as st
