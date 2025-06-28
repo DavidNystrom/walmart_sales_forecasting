@@ -96,7 +96,7 @@ After running the full pipeline and evaluating on the hold-out set:
 ![Dashboard Interface](visualizations/forecasts/dashboard.png)
 
 ### Sample Forecast (Store 1, Dept 1)  
-![Forecast for Store 1, Dept 1](visualizations/forecasts/store_1_dept_1.png)
+![Forecast for Store 1, Dept 1](visualizations/forecasts/forecast_s1_d1.png)
 
 ---
 
